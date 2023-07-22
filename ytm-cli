@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+if ! [ -z $2 ]; then
+  echo "The proper syntax for ytm-cli is as follows:"
+  echo "ytm-cli \"\${your_song_or_playlist_link_here}\""
+fi
+
+mkdir ytm-cli-temp
+cd ytm-cli-temp
+
+yt-dlp "$1"
+
+for i in *; do
+  if [ $(echo "${i}" | cut -d ' ' -f2) == "-" ]; then
+    ffmpeg -i "${i}" -metadata artist="$(echo """${i}""" | cut -d ' ' -f1)" -metadata title="$(echo """${i}""" | cut -d ' ' -f3- | sed -e 's/\..*//' -e 's/\[.*\]//')" "$(echo """${i}""" | sed -e 's/\..*$/\.mp3/' -e 's/ \[.*\]\././g')"
+  else
+    ffmpeg -i "${i}" -metadata title="$(echo """${i}""" | sed -e 's/\..*//' -e 's/\[.*\]//')" "$(echo """${i}""" | sed -e 's/\..*$/\.mp3/' -e 's/ \[.*\]\././g')"
+  fi
+  rm "${i}"
+done
+
+cd ..
+mv ytm-cli-temp/* .
+rm -rf ytm-cli-temp
