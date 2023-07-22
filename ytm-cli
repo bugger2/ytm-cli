@@ -1,15 +1,30 @@
 #!/usr/bin/env bash
 
+# Checking proper syntax
 if ! [ -z $2 ]; then
   echo "The proper syntax for ytm-cli is as follows:"
   echo "ytm-cli \"\${your_song_or_playlist_link_here}\""
 fi
 
+# Checking dependencies
+if ! [ -f /usr/bin/yt-dlp ]; then
+  echo "Please install yt-dlp"
+  exit 1
+fi
+
+if ! [ -f /usr/bin/ffmpeg ]; then
+  echo "Please install ffmpeg"
+  exit 1
+fi
+
+# Creating working directory
 mkdir ytm-cli-temp
 cd ytm-cli-temp
 
+# Download the song{,s}
 yt-dlp "$1"
 
+# Convert the files and add metadata
 for i in *; do
   if [ $(echo "${i}" | cut -d ' ' -f2) == "-" ]; then
     ffmpeg -i "${i}" -metadata artist="$(echo """${i}""" | cut -d ' ' -f1)" -metadata title="$(echo """${i}""" | cut -d ' ' -f3- | sed -e 's/\..*//' -e 's/\[.*\]//')" "$(echo """${i}""" | sed -e 's/\..*$/\.mp3/' -e 's/ \[.*\]\././g')"
@@ -19,6 +34,7 @@ for i in *; do
   rm "${i}"
 done
 
+# Leave and remove the working directory
 cd ..
 mv ytm-cli-temp/* .
 rm -rf ytm-cli-temp
