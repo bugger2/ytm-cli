@@ -26,10 +26,10 @@ Or, to download a playlist:
 
 *** Flags
 
-|------+------------------------------+--------------------------------------------------------------------------------------------------------------------|
-| Flag | Description                  | Example                                                                                                            |
-|------+------------------------------+--------------------------------------------------------------------------------------------------------------------|
-| -a   | Specify the Artist           | `ytm-cli -a "The Offspring" "https://youtu.be/asDlYjJqzWE"`                                                        |
-| -t   | Specify the Title            | `ytm-cli -t "Dividing By Zero/Slim Pickins Does the Right Thing and Rides the Bomb to Hell" "https://youtu.be/asDlYjJqzWE"` |
-| -d   | Specify the Output Directory | `ytm-cli -d ~/Music/ "https://youtu.be/asDlYjJqzWE"`                                                               |
-|------+------------------------------+--------------------------------------------------------------------------------------------------------------------|
+|------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------|
+| Flag | Description                  | Example                                                                                                                             |
+|------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------|
+| -a   | Specify the Artist           | src_bash{ytm-cli -a "The Offspring" "https://youtu.be/asDlYjJqzWE"}                                                                 |
+| -t   | Specify the Title            | src_bash{ytm-cli -t "Dividing By Zero/Slim Pickins Does the Right Thing and Rides the Bomb to Hell" "https://youtu.be/asDlYjJqzWE"} |
+| -d   | Specify the Output Directory | src_bash{ytm-cli -d ~/Music/ "https://youtu.be/asDlYjJqzWE"}                                                                        |
+|------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------|
