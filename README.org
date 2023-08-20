@@ -1,10 +1,10 @@
-* Table of Contents :toc:
+* ytm-cli, the Youtube Music CLI
+
+** Table of Contents                                                   :toc: 
 - [[#ytm-cli-the-youtube-music-cli][ytm-cli, the Youtube Music CLI]]
   - [[#about][About]]
   - [[#installation][Installation]]
   - [[#usage][Usage]]
-
-* ytm-cli, the Youtube Music CLI
 
 ** About
 
