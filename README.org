@@ -18,11 +18,15 @@ Simply pass the URL you want to download as the first argument, and voila!
 
 For example:
 
-`ytm-cli "https://youtu.be/dQw4w9WgXcQ"`
+#+begin_src bash
+ytm-cli "https://youtu.be/dQw4w9WgXcQ"
+#+end_src
 
 Or, to download a playlist:
 
-`ytm-cli "https://youtube.com/playlist?list=PLnif9Rfb5Admo7tMY_XzYsvJNCfIeaB4U"`
+#+begin_src bash
+ytm-cli "https://youtube.com/playlist?list=PLnif9Rfb5Admo7tMY_XzYsvJNCfIeaB4U"
+#+end_src
 
 *** Flags
 
