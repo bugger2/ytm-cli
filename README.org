@@ -26,10 +26,10 @@ Or, to download a playlist:
 
 *** Flags
 
-|------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------|
-| Flag | Description                  | Example                                                                                                                             |
-|------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------|
-| -a   | Specify the Artist           | src_bash{ytm-cli -a "The Offspring" "https://youtu.be/asDlYjJqzWE"}                                                                 |
-| -t   | Specify the Title            | src_bash{ytm-cli -t "Dividing By Zero/Slim Pickins Does the Right Thing and Rides the Bomb to Hell" "https://youtu.be/asDlYjJqzWE"} |
-| -d   | Specify the Output Directory | src_bash{ytm-cli -d ~/Music/ "https://youtu.be/asDlYjJqzWE"}                                                                        |
-|------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------|
+|------+------------------------------+---------------------------------------------------------------------------------------------------------------------------|
+| Flag | Description                  | Example                                                                                                                   |
+|------+------------------------------+---------------------------------------------------------------------------------------------------------------------------|
+| -a   | specify the artist           | ytm-cli -a "the offspring" "https://youtu.be/asdlyjjqzwe"                                                                 |
+| -t   | specify the title            | ytm-cli -t "dividing by zero/slim pickins does the right thing and rides the bomb to hell" "https://youtu.be/asdlyjjqzwe" |
+| -d   | specify the output directory | ytm-cli -d ~/music/ "https://youtu.be/asdlyjjqzwe"                                                                        |
+|------+------------------------------+---------------------------------------------------------------------------------------------------------------------------|
