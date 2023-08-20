@@ -1,40 +1,78 @@
 #!/usr/bin/env bash
 
-# Checking proper syntax
-if ! [ -z $2 ]; then
-  echo "The proper syntax for ytm-cli is as follows:"
-  echo "ytm-cli \"\${your_song_or_playlist_link_here}\""
-fi
-
-# Checking dependencies
-if ! [ -f /usr/bin/yt-dlp ]; then
-  echo "Please install yt-dlp"
-  exit 1
-fi
-
-if ! [ -f /usr/bin/ffmpeg ]; then
-  echo "Please install ffmpeg"
-  exit 1
-fi
+pwd="$(pwd)"
 
 # Creating working directory
-mkdir ytm-cli-temp
-cd ytm-cli-temp
+mkdir /tmp/ytm-cli
+cd /tmp/ytm-cli || exit
 
-# Download the song{,s}
-yt-dlp "$1"
+exit_message() {
+    echo -e "Usage: ytm-cli [OPTIONS] [youtube-link]"
+    echo -e "Options:"
+    echo -e "\t-a=[artist] - The name of the artist for all songs"
+    echo -e "\t-t=[title] - The name of the song (overwrites all song names, even with a playlist)"
+    echo -e "\t-d=[directory] - The directory the song should be placed in (current directory by default)"
+	#rm -rf /tmp/ytm-cli
+    exit 1
+}
 
-# Convert the files and add metadata
-for i in *; do
-  if echo "${i}" | grep -q '-'; then
-    ffmpeg -i "${i}" -metadata artist="$(echo """${i}""" | sed 's/ \?-.*//')" -metadata title="$(echo """${i}""" | sed -e 's/^.*- \?//' -e 's/\..*//' -e 's/\[.*\]//')" "$(echo """${i}""" | sed -e 's/\..*$/\.mp3/' -e 's/ \[.*\]\././g')"
-  else
-    ffmpeg -i "${i}" -metadata title="$(echo """${i}""" | sed -e 's/\..*//' -e 's/\[.*\]//')" "$(echo """${i}""" | sed -e 's/\..*$/\.mp3/' -e 's/ \[.*\]\././g')"
-  fi
-  rm "${i}"
+exit_with_message() {
+	echo "$1"
+	#rm -rf /tmp/ytm-cli
+	exit 1
+}
+
+# Checking options
+while getopts "a:t:d:" option; do
+	case "${option}" in
+		a)
+			artist="${OPTARG}"
+			;;
+		t)
+			title="${OPTARG}"
+			;;
+		d)
+			pwd="${OPTARG}"
+			;;
+		*)
+			exit_message
+			;;
+	esac
 done
 
-# Leave and remove the working directory
-cd ..
-mv ytm-cli-temp/* .
-rm -rf ytm-cli-temp
+if [ -z "$1" ]; then
+	exit_message
+fi
+
+	# Checking dependencies
+	if ! [ -f /usr/bin/yt-dlp ]; then
+		exit_with_message "Please install yt-dlp"
+	fi
+
+	if ! [ -f /usr/bin/ffmpeg ]; then
+		exit_with_message "Please install ffmpeg"
+	fi
+
+	# Download the song{,s}
+	yt-dlp -x "${@: -1}" || exit_with_message "Failed to download music"
+
+	# Convert the files and add metadata
+	for i in /tmp/ytm-cli/*; do
+		artist_use="$(test -n """${artist}""" && echo """${artist}""" || echo """${i}""" | sed 's/ \?-.*//')"
+		output_use="$(test -n """${title}""" && echo """$(echo "${title}" | sed -e 's/\// /g' -e 's/$/\.mp3/' -e 's/^/\/tmp\/ytm-cli\//')""" || echo """${i}""" | sed -e 's/\..*$/\.mp3/' -e 's/ \[.*\]\././g')"
+		if echo "${i}" | grep -q '-'; then
+
+			title_use="$(test -n """${title}""" && echo """${title}""" || echo """${i}""" | sed -e 's/^.*- \?//' -e 's/\..*//' -e 's/\[.*\]//')"
+
+			ffmpeg -i "${i}" -metadata artist="${artist_use}" -metadata title="${title_use}" "${output_use}" || exit_with_message "Failed to encode music data"
+		else
+			title_use="$(test -n """${title}""" && echo """${title}""" || echo """${i}""" | sed -e 's/^.*- \?//' -e 's/\..*//' -e 's/\[.*\]//')"
+
+			ffmpeg -i "${i}" -metadata artist="${artist_use}" -metadata title="${title_use}" "${output_use}" || exit_with_message "Failed to encode music data"
+		fi
+		rm "${i}"
+	done
+
+	# Clean up time
+	mv /tmp/ytm-cli/* "${pwd}"
+	rm -rf /tmp/ytm-cli
