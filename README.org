@@ -33,7 +33,7 @@ ytm-cli "https://youtube.com/playlist?list=PLnif9Rfb5Admo7tMY_XzYsvJNCfIeaB4U"
 |------+------------------------------+---------------------------------------------------------------------------------------------------------------------------|
 | Flag | Description                  | Example                                                                                                                   |
 |------+------------------------------+---------------------------------------------------------------------------------------------------------------------------|
-| -a   | specify the artist           | ytm-cli -a "the offspring" "https://youtu.be/asdlyjjqzwe"                                                                 |
-| -t   | specify the title            | ytm-cli -t "dividing by zero/slim pickins does the right thing and rides the bomb to hell" "https://youtu.be/asdlyjjqzwe" |
-| -d   | specify the output directory | ytm-cli -d ~/music/ "https://youtu.be/asdlyjjqzwe"                                                                        |
+| -a   | specify the artist           | ytm-cli -a "the offspring" "https://youtu.be/asDlYjJqzWE"                                                                 |
+| -t   | specify the title            | ytm-cli -t "dividing by zero/slim pickins does the right thing and rides the bomb to hell" "https://youtu.be/asDlYjJqzWE" |
+| -d   | specify the output directory | ytm-cli -d ~/music/ "https://youtu.be/asDlYjJqzWE"                                                                        |
 |------+------------------------------+---------------------------------------------------------------------------------------------------------------------------|
